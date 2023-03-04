@@ -5,7 +5,7 @@ import sys
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 
-MESSAGES_AMOUNT = 10000
+MESSAGES_AMOUNT = 1000
 bytes_amount = int(sys.argv[1])
 message = "X" * bytes_amount
 
