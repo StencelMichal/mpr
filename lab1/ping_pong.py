@@ -23,7 +23,7 @@ def ping_pong(_):
 
     stop = MPI.Wtime()
 
-    return stop - start
+    return (stop - start) / 2
 
 
 total_time = sum(map(ping_pong, range(MESSAGES_AMOUNT)))
