@@ -27,7 +27,7 @@ def ping_pong(_):
 
 
 # total_time = sum(map(ping_pong, range(MESSAGES_AMOUNT)))
-values = list(map(ping_pong, range(MESSAGES_AMOUNT)))
+values = list(sorted(map(ping_pong, range(MESSAGES_AMOUNT))))
 total_time = (values[49] + values[50]) / 2
 
 if rank == 0:
