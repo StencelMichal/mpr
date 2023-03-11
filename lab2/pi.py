@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/usr/bin/env python
 import sys
 from mpi4py import MPI
 import random
