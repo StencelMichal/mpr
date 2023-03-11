@@ -15,18 +15,20 @@ def ping_pong(_):
     start = MPI.Wtime()
 
     if rank == 0:
-        comm.send(message, dest=1)
+        comm.ssend(message, dest=1)
         comm.recv(source=1)
     elif rank == 1:
         data = comm.recv(source=0)
-        comm.send(data, dest=0)
+        comm.ssend(data, dest=0)
 
     stop = MPI.Wtime()
 
     return (stop - start) / 2
 
 
-total_time = sum(map(ping_pong, range(MESSAGES_AMOUNT)))
+# total_time = sum(map(ping_pong, range(MESSAGES_AMOUNT)))
+values = list(map(ping_pong, range(MESSAGES_AMOUNT)))
+total_time = (values[49] + values[50]) / 2
 
 if rank == 0:
     result = total_time / MESSAGES_AMOUNT
