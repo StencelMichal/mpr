@@ -20,7 +20,7 @@ def random_point():
 comm.Barrier()
 start = MPI.Wtime()
 inside = 0
-for _ in range(node_points_amount):
+for _ in xrange(node_points_amount):
     point = random_point()
     x, y = point
     if x ** 2 + y ** 2 < 1:
