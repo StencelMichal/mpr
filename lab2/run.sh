@@ -1,20 +1,19 @@
 #!/bin/bash
 
 # Job configuration
-#SBATCH --job-name=pi-calculation
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=12
-#SBATCH --time=12:00:00
+
+#!/bin/bash -l
+#SBATCH --nodes 1
+#SBATCH --ntasks 12
+#SBATCH --time=01:00:00
 #SBATCH --partition=plgrid
-#SBATCH --account=plgmpr22
+#SBATCH --account=plgmpr23-cpu
 
 # Variables
 #number_of_points="5000000 41833001 350000000"
 number_of_points="5000 41833 350000"
-
 # Load modules
-module load plgrid/tools/openmpi
-module load plgrid/libs/python-mpi4py/3.0.0-python-2.7
+module add scipy-bundle/2021.10-foss-2021b
 
 # pi calculation
 run_pi_calculation() {
