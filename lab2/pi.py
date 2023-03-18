@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 import sys
 from mpi4py import MPI
 import random
@@ -20,7 +19,7 @@ def random_point():
 comm.Barrier()
 start = MPI.Wtime()
 inside = 0
-for _ in xrange(node_points_amount):
+for _ in range(node_points_amount):
     point = random_point()
     x, y = point
     if x ** 2 + y ** 2 < 1:
@@ -28,7 +27,7 @@ for _ in xrange(node_points_amount):
 
 total_inside = comm.reduce(inside, op=MPI.SUM, root=0)
 if rank == 0:
-    pi = 4 * (total_inside / float(pointsAmount))
+    # pi = 4 * (total_inside / float(pointsAmount))
     stop = MPI.Wtime()
     time = stop - start
-    print("{time};{points_total};{pi}".format(time=time, points_total=pointsAmount, pi=pi))
+    print(f"{pointsAmount};{size};{time}")
