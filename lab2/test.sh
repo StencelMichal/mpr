@@ -22,10 +22,8 @@ run_pi_calculation 1000000 1
 run_pi_calculation 2000000 1
 run_pi_calculation 4000000 1
 
-run_pi_calculation 10000000 12
-run_pi_calculation 20000000 12
-run_pi_calculation 40000000 12
-run_pi_calculation 80000000 12
-run_pi_calculation 160000000 12
 run_pi_calculation 320000000 12
+run_pi_calculation 640000000 12
+run_pi_calculation 1280000000 12
+
 
