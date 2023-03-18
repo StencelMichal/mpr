@@ -10,7 +10,7 @@
 #SBATCH --account=plgmpr23-cpu
 
 # Variables
-number_of_points="1000000 35777087 1280000000"
+number_of_points="83333 2981417 106666666"
 
 # Load modules
 module add scipy-bundle/2021.10-foss-2021b

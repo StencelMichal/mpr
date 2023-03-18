@@ -19,11 +19,6 @@ run_pi_calculation() {
 }
 
 run_pi_calculation 1000000 1
-run_pi_calculation 2000000 1
-run_pi_calculation 4000000 1
-
-run_pi_calculation 320000000 12
-run_pi_calculation 640000000 12
 run_pi_calculation 1280000000 12
 
 
