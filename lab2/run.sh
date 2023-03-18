@@ -24,7 +24,7 @@ run_pi_calculation() {
 
 # Loop through number of points and run pi calculation
 for num_points in $number_of_points; do
-  for ((i = 1; i <= 15; i++)); do
+  for ((i = 1; i <= 3; i++)); do
     for ((num_processors = 1; num_processors <= 12; num_processors++)); do
       run_pi_calculation "$num_points" "$num_processors"
     done
