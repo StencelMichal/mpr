@@ -31,4 +31,4 @@ if rank == 0:
     pi = 4 * (total_inside / float(pointsAmount))
     stop = MPI.Wtime()
     time = stop - start
-    print  "{time};{points_total};{pi}".format(time=time, points_total=pointsAmount, pi=pi)
+    print("{time};{points_total};{pi}".format(time=time, points_total=pointsAmount, pi=pi))
