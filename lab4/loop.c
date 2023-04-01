@@ -19,7 +19,9 @@ int main(int argc, char *argv[]) {
     seed[0] = 0;
     seed[1] = 0;
     seed[2] = 0;
-    double numbers[array_size];
+    //double numbers[array_size];
+    double *numbers = calloc(array_size, sizeof(double));
+
     int i;
     double cpu_time_used;
     start = omp_get_wtime();
@@ -33,7 +35,7 @@ int main(int argc, char *argv[]) {
     }
     end = omp_get_wtime();
     cpu_time_used = (end - start);
-    printf("Time: %f \n", cpu_time_used);
+    printf("%d;%d;%f\n", num_threads, array_size, cpu_time_used); 
     return 0;
 }
 
