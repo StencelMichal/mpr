@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     }
     end = omp_get_wtime();
     cpu_time_used = (end - start);
-    printf("%d;%d;%f\n", num_threads, array_size, cpu_time_used); 
+    printf("%d;%d;%f\n", array_size, num_threads, cpu_time_used);
     return 0;
 }
 
