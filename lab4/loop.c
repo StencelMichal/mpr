@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     start = omp_get_wtime();
     #pragma omp parallel private(seed)
     {
-        #pragma omp for schedule(auto)
+        #pragma omp for schedule(runtime)
             for(i = 0; i < array_size; i++){
                 numbers[i] = erand48(seed);
             }
