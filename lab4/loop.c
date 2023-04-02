@@ -24,9 +24,9 @@ int main(int argc, char *argv[]) {
     int i;
     double cpu_time_used;
     start = omp_get_wtime();
-    #pragma omp parallel schedule(static) private(seed)
+    #pragma omp parallel private(seed)
     {
-        #pragma omp for
+        #pragma omp for schedule(static)
             for(i = 0; i < array_size; i++){
                 numbers[i] = erand48(seed);
             }
