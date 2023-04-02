@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
         #pragma omp for schedule(runtime)
             for(i = 0; i < array_size; i++){
                 numbers[i] = erand48(seed);
-                printf("Number: %f\n", numbers[i]);
+//                printf("Number: %f\n", numbers[i]);
             }
     }
     end = omp_get_wtime();
