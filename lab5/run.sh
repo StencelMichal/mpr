@@ -11,7 +11,7 @@ if [ -e "$results" ]; then
   rm "$results"
 fi
 
-for ((i = 1; i <= 50000000; i += 500000)); do
+for ((i = 1; i <= 1; i += 1)); do
   ./sort.out 1 50000000 $i >>"$bucket_size_file"
 done
 
