@@ -3,7 +3,7 @@
 #include <utility>
 #include <vector>
 //#include "/usr/local/opt/libomp/include/omp.h"
-#include "omp.h"
+//#include "omp.h"
 
 using namespace std;
 
@@ -103,26 +103,26 @@ void reassign_to_array(vector<vector<Bucket>> buckets_by_thread, int thread_id, 
 }
 
 
-double *sort(double *numbers, Configuration config) {
-    vector<vector<Bucket>> buckets_by_thread;
-    for (int i = 0; i < config.num_threads; i++) {
-        buckets_by_thread.push_back(vector<Bucket>(config.num_threads));
-    }
-    omp_set_num_threads(config.num_threads);
-#pragma omp parallel
-    {
-        int thread_id = omp_get_thread_num();
-        vector<Bucket> buckets = buckets_by_thread[thread_id];
-        assign_to_buckets(thread_id, numbers, config.array_size, buckets);
-        sort_buckets(buckets);
-        reassign_to_array(buckets_by_thread, thread_id, numbers);
-    }
-    return numbers;
-}
+//double *sort(double *numbers, Configuration config) {
+//    vector<vector<Bucket>> buckets_by_thread;
+//    for (int i = 0; i < config.num_threads; i++) {
+//        buckets_by_thread.push_back(vector<Bucket>(config.num_threads));
+//    }
+//    omp_set_num_threads(config.num_threads);
+//#pragma omp parallel
+//    {
+//        int thread_id = omp_get_thread_num();
+//        vector<Bucket> buckets = buckets_by_thread[thread_id];
+//        assign_to_buckets(thread_id, numbers, config.array_size, buckets);
+//        sort_buckets(buckets);
+//        reassign_to_array(buckets_by_thread, thread_id, numbers);
+//    }
+//    return numbers;
+//}
 
 void print_array(double *array, int size) {
     for (int i = 0; i < size; i++) {
-        printf("%f ", array[i]);
+        printf("%f\n", array[i]);
     }
 }
 
@@ -130,6 +130,6 @@ int main(int argc, char *argv[]) {
     Configuration config = load_config_from_args(argc, argv);
     double *numbers = generate_random_numbers(config.array_size);
     print_array(numbers, config.array_size);
-    double *sorted = sort(numbers, config);
-    print_array(sorted, config.array_size);
+//    double *sorted = sort(numbers, config);
+//    print_array(sorted, config.array_size);
 }
