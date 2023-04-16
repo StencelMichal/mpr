@@ -3,7 +3,7 @@
 
 #SBATCH --nodes 1
 #SBATCH --ntasks 30
-#SBATCH --time=03:00:00
+#SBATCH --time=00:30:00
 #SBATCH --partition=plgrid
 #SBATCH --account=plgmpr23-cpu
 
