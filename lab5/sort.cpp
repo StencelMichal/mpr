@@ -71,15 +71,15 @@ double *generate_random_numbers(int array_size) {
     return numbers;
 }
 
-void sort_buckets(vector<Bucket> *buckets) {
-    for (auto &bucket: *buckets) {
-        bucket.sort_values();
+void sort_buckets(vector<Bucket> &buckets) {
+    for (int i = 0; i < buckets.size(); i++) {
+        buckets[i].sort_values();
     }
 }
 
-void assign_to_buckets(int thread_id, const double *numbers, Configuration config, vector<Bucket> *buckets) {
+void assign_to_buckets(int thread_id, const double *numbers, Configuration config, vector<Bucket> &buckets) {
     //dodać osobne czytanie
-    printf("bucket size: %d\n", buckets.size());
+    printf("bucket size: %zu\n", buckets.size());
     double bucket_size = 1.0 / double(buckets.size());
     double from_value_range = thread_id * (1.0 / double(config.num_threads));
     double to_value_range = (thread_id + 1) * (1.0 / double(config.num_threads));
@@ -106,7 +106,7 @@ int count_preceding_elements(vector<vector<Bucket>> buckets_by_thread, int threa
     return count;
 }
 
-void reassign_to_array(vector<vector<Bucket>> buckets_by_thread, int thread_id, double *numbers) {
+void reassign_to_array(vector<vector<Bucket>> &buckets_by_thread, int thread_id, double *numbers) {
     int i = count_preceding_elements(buckets_by_thread, thread_id);
     printf("preceding elements: %d", i);
     vector<Bucket> buckets = buckets_by_thread[thread_id];
@@ -133,8 +133,8 @@ double *sort(double *numbers, Configuration config) {
     {
         int thread_id = omp_get_thread_num();
         vector<Bucket> buckets = buckets_by_thread[thread_id];
-        assign_to_buckets(thread_id, numbers, config, &buckets);
-        sort_buckets(&buckets);
+        assign_to_buckets(thread_id, numbers, config, buckets);
+        sort_buckets(buckets);
         reassign_to_array(buckets_by_thread, thread_id, numbers);
     }
     return numbers;
