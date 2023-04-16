@@ -168,7 +168,7 @@ double *sort(Configuration config) {
 int main(int argc, char *argv[]) {
     Configuration config = load_config_from_args(argc, argv);
     total_time.start = omp_get_wtime();
-    double *sorted = sort(numbers, config);
+    double *sorted = sort(config);
     total_time.end = omp_get_wtime();
     printf("\nSorted array:\n");
     print_array(sorted, config.array_size);
