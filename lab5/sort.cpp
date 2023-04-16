@@ -16,9 +16,7 @@ public:
         numbers.push_front(val);
         printf("dodaje\n");
         // printint numbers in bucket
-        for (auto it = numbers.begin(); it != numbers.end(); ++it) {
-            cout << *it << " ";
-        }
+        print();
     }
 
     void print() {
