@@ -114,7 +114,7 @@ double *sort(double *numbers, Configuration config) {
         int thread_id = omp_get_thread_num();
         vector<Bucket> buckets = buckets_by_thread[thread_id];
         assign_to_buckets(thread_id, numbers, config.array_size, buckets);
-//        sort_buckets(buckets);
+        sort_buckets(buckets);
 //        reassign_to_array(buckets_by_thread, thread_id, numbers);
     }
     return numbers;
@@ -131,5 +131,5 @@ int main(int argc, char *argv[]) {
     double *numbers = generate_random_numbers(config.array_size);
     print_array(numbers, config.array_size);
     double *sorted = sort(numbers, config);
-//    print_array(sorted, config.array_size);
+    print_array(sorted, config.array_size);
 }
