@@ -90,14 +90,17 @@ double *generate_random_numbers(double *numbers, int array_size) {
 }
 
 void sort_buckets(vector<Bucket> &buckets) {
+    sort_buckets_time.start = omp_get_wtime();
     for (int i = 0; i < buckets.size(); i++) {
         // printf("Sorting buckets\n");
         // buckets[i].print();
         buckets[i].sort_values();
     }
+    sort_buckets_time.end = omp_get_wtime();
 }
 
 void assign_to_buckets(int thread_id, const double *numbers, Configuration config, vector<Bucket> &buckets) {
+    assign_to_buckets_time.start = omp_get_wtime();
     //dodać osobne czytanie
     // printf("bucket size: %zu\n", buckets.size());
     double bucket_size = 1.0 / double(buckets.size());
@@ -114,6 +117,7 @@ void assign_to_buckets(int thread_id, const double *numbers, Configuration confi
             buckets[bucket_index].add(number);
         }
     }
+    assign_to_buckets_time.end = omp_get_wtime();
 }
 
 int count_preceding_elements(vector<vector<Bucket>> &buckets_by_thread, int thread_id) {
@@ -127,6 +131,7 @@ int count_preceding_elements(vector<vector<Bucket>> &buckets_by_thread, int thre
 }
 
 void reassign_to_array(vector<vector<Bucket>> &buckets_by_thread, int thread_id, double *numbers) {
+    reassign_to_array_time.start = omp_get_wtime();
     int i = count_preceding_elements(buckets_by_thread, thread_id);
     // printf("preceding elements: %d", i);
     vector<Bucket> buckets = buckets_by_thread[thread_id];
@@ -140,6 +145,7 @@ void reassign_to_array(vector<vector<Bucket>> &buckets_by_thread, int thread_id,
     }
     // printf("\nArray after reassigning: \n)");
 //    print_array(numbers, 10);
+    reassign_to_array_time.end = omp_get_wtime();
 }
 
 
@@ -172,5 +178,12 @@ int main(int argc, char *argv[]) {
     total_time.end = omp_get_wtime();
     printf("\nSorted array:\n");
     print_array(sorted, config.array_size);
+    cout << "Total time: " << total_time.time_delta() << endl;
+    cout << "Total time: " << total_time.time_delta() << endl;
+
+    cout << "Generate numbers time: " << generate_numbers_time.time_delta() << endl;
+    cout << "Assign to buckets time: " << assign_to_buckets_time.time_delta() << endl;
+    cout << "Sort buckets time: " << sort_buckets_time.time_delta() << endl;
+    cout << "Reassign to array time: " << reassign_to_array_time.time_delta() << endl;
     cout << "Total time: " << total_time.time_delta() << endl;
 }
