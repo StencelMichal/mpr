@@ -80,7 +80,7 @@ void assign_to_buckets(int thread_id, const double *numbers, Configuration confi
     double bucket_size = 1.0 / double(buckets.size());
     double from_value_range = thread_id * (1.0 / double (config.num_threads));
     double to_value_range = (thread_id + 1) * (1.0 / double(config.num_threads));
-    printf("THreadId: %d, Bucket size: %d, From: %f, to: %f\n", thread_id, bucket_size, from_value_range,
+    printf("THreadId: %d, Bucket size: %f, From: %f, to: %f\n", thread_id, bucket_size, from_value_range,
            to_value_range);
 #pragma omp for schedule(runtime)
     for (int i = 0; i < config.array_size; i++) {
