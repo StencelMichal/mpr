@@ -77,8 +77,8 @@ void sort_buckets(vector<Bucket> &buckets) {
 void assign_to_buckets(int thread_id, const double *numbers, Configuration config, vector<Bucket> buckets) {
     //dodać osobne czytanie
     double bucket_size = 1.0 / double(buckets.size());
-    double from_value_range = thread_id * (1.0 / config.num_threads);
-    double to_value_range = (thread_id + 1) * (1.0 / config.num_threads);
+    double from_value_range = thread_id * (1.0 / double (config.num_threads));
+    double to_value_range = (thread_id + 1) * (1.0 / double(config.num_threads));
     printf("THreadId: %d, Bucket size: %d, From: %f, to: %f\n", thread_id, bucket_size, from_value_range,
            to_value_range);
 #pragma omp for schedule(runtime)
