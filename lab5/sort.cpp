@@ -14,9 +14,9 @@ public:
 
     void add(double val) {
         numbers.push_front(val);
-        printf("dodaje\n");
+        // printf("dodaje\n");
         // printint numbers in bucket
-        print();
+        // print();
     }
 
     void print() {
@@ -73,26 +73,26 @@ double *generate_random_numbers(int array_size) {
 
 void sort_buckets(vector<Bucket> &buckets) {
     for (int i = 0; i < buckets.size(); i++) {
-        printf("Sorting buckets\n");
-        buckets[i].print();
+        // printf("Sorting buckets\n");
+        // buckets[i].print();
         buckets[i].sort_values();
     }
 }
 
 void assign_to_buckets(int thread_id, const double *numbers, Configuration config, vector<Bucket> &buckets) {
     //dodać osobne czytanie
-    printf("bucket size: %zu\n", buckets.size());
+    // printf("bucket size: %zu\n", buckets.size());
     double bucket_size = 1.0 / double(buckets.size());
     double from_value_range = thread_id * (1.0 / double(config.num_threads));
     double to_value_range = (thread_id + 1) * (1.0 / double(config.num_threads));
-    printf("THreadId: %d, Bucket size: %f, From: %f, to: %f\n", thread_id, bucket_size, from_value_range,
-           to_value_range);
+    // printf("THreadId: %d, Bucket size: %f, From: %f, to: %f\n", thread_id, bucket_size, from_value_range,
+//    to_value_range);
     for (int i = 0; i < config.array_size; i++) {
         double number = numbers[i];
-        printf("Checking number: %f %f %f\n", from_value_range, number, to_value_range);
+        // printf("Checking number: %f %f %f\n", from_value_range, number, to_value_range);
         if (from_value_range <= number && number < to_value_range) {
             int bucket_index = number / bucket_size;
-            printf("Bucket index: %d\n", bucket_index);
+            // printf("Bucket index: %d\n", bucket_index);
             buckets[bucket_index].add(number);
         }
     }
@@ -110,17 +110,17 @@ int count_preceding_elements(vector<vector<Bucket>> &buckets_by_thread, int thre
 
 void reassign_to_array(vector<vector<Bucket>> &buckets_by_thread, int thread_id, double *numbers) {
     int i = count_preceding_elements(buckets_by_thread, thread_id);
-    printf("preceding elements: %d", i);
+    // printf("preceding elements: %d", i);
     vector<Bucket> buckets = buckets_by_thread[thread_id];
     for (auto &bucket: buckets) {
-        printf("\nBucket\n");
+        // printf("\nBucket\n");
         bucket.print();
         for (auto &number: bucket.numbers) {
             numbers[i] = number;
             i++;
         }
     }
-    printf("\nArray after reassigning: \n)");
+    // printf("\nArray after reassigning: \n)");
     print_array(numbers, 10);
 }
 
