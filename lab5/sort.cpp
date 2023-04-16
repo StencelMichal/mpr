@@ -137,6 +137,8 @@ double *sort(double *numbers, Configuration config) {
         vector<Bucket> buckets = buckets_by_thread[thread_id];
         assign_to_buckets(thread_id, numbers, config, buckets);
         sort_buckets(buckets);
+        printf("after sorting buckets\n");
+        buckets_by_thread[thread_id][0].print();
         reassign_to_array(buckets_by_thread, thread_id, numbers);
     }
     return numbers;
