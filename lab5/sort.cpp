@@ -174,7 +174,7 @@ double *sort(Configuration config) {
 }
 
 void print_time_measurements(Configuration config) {
-    printf("1;%d;%d;%d;%f;%f;%f;%f;%f;", config.array_size, config.bucket_amount, config.num_threads,
+    printf("1;%d;%d;%d;%f;%f;%f;%f;%f\n", config.array_size, config.bucket_amount, config.num_threads,
            total_time.time_delta(), generate_numbers_time.time_delta(), assign_to_buckets_time.time_delta(),
            sort_buckets_time.time_delta(), reassign_to_array_time.time_delta());
 }
