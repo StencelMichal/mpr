@@ -49,6 +49,10 @@ public:
     double time_delta() const {
         return end - start;
     }
+
+    void print_with_config(Configuration config) const {
+        printf("%f;%d;%d;%d;\n", time_delta(), config.num_threads, config.array_size, config.bucket_amount);
+    }
 };
 
 TimeMeasurement generate_numbers_time;
@@ -173,12 +177,17 @@ double *sort(Configuration config) {
     return numbers;
 }
 
-void print_time_measurements() {
-    cout << "Generate numbers time: " << generate_numbers_time.time_delta() << endl;
-    cout << "Assign to buckets time: " << assign_to_buckets_time.time_delta() << endl;
-    cout << "Sort buckets time: " << sort_buckets_time.time_delta() << endl;
-    cout << "Reassign to array time: " << reassign_to_array_time.time_delta() << endl;
-    cout << "Total time: " << total_time.time_delta() << endl;
+void print_time_measurements(Configuration config) {
+    printf("Generate numbers time;");
+    total_time.print_with_config(config);
+    printf("Assign to buckets time;");
+    assign_to_buckets_time.print_with_config(config);
+    printf("Sort buckets time;");
+    sort_buckets_time.print_with_config(config);
+    printf("Reassign to array time;");
+    reassign_to_array_time.print_with_config(config);
+    printf("Total time;");
+    total_time.print_with_config(config);
 }
 
 
@@ -189,5 +198,5 @@ int main(int argc, char *argv[]) {
     total_time.end = omp_get_wtime();
 //    printf("\nSorted array:\n");
 //    print_array(sorted, config.array_size);
-    print_time_measurements();
+    print_time_measurements(config);
 }
