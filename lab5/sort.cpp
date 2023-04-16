@@ -76,6 +76,7 @@ void sort_buckets(vector<Bucket> &buckets) {
 
 void assign_to_buckets(int thread_id, const double *numbers, Configuration config, vector<Bucket> buckets) {
     //dodać osobne czytanie
+    printf("bucket size: %d\n", buckets.size());
     double bucket_size = 1.0 / double(buckets.size());
     double from_value_range = thread_id * (1.0 / double (config.num_threads));
     double to_value_range = (thread_id + 1) * (1.0 / double(config.num_threads));
