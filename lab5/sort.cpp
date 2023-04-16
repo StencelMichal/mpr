@@ -8,7 +8,6 @@
 using namespace std;
 
 
-
 class Bucket {
 public:
     list<double> numbers;
@@ -77,15 +76,17 @@ void sort_buckets(vector<Bucket> &buckets) {
 
 void assign_to_buckets(int thread_id, const double *numbers, Configuration config, vector<Bucket> buckets) {
     //dodać osobne czytanie
+    double bucket_size = 1.0 / buckets.size();
     double from_value_range = thread_id * (1.0 / config.num_threads);
     double to_value_range = (thread_id + 1) * (1.0 / config.num_threads);
-    printf("THreadId: %d, From: %f, to: %f", thread_id, from_value_range, to_value_range);
+    printf("THreadId: %d, Bucket size: %d, From: %f, to: %f\n", thread_id, bucket_size, from_value_range,
+           to_value_range);
 #pragma omp for schedule(runtime)
     for (int i = 0; i < config.array_size; i++) {
         double number = numbers[i];
-        if (number >= from_value_range && number < to_value_range) {
-            double bucket_size = 1.0 / buckets.size();
+        if (from_value_range <= number && number < to_value_range) {
             int bucket_index = number / bucket_size;
+            printf("Bucket index: %d", bucket_index);
             buckets[bucket_index].add(number);
         }
     }
@@ -134,7 +135,6 @@ double *sort(double *numbers, Configuration config) {
     }
     return numbers;
 }
-
 
 
 int main(int argc, char *argv[]) {
