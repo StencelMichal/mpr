@@ -121,7 +121,7 @@ void reassign_to_array(vector<vector<Bucket>> &buckets_by_thread, int thread_id,
         }
     }
     // printf("\nArray after reassigning: \n)");
-    print_array(numbers, 10);
+//    print_array(numbers, 10);
 }
 
 
