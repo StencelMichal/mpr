@@ -1,4 +1,11 @@
-#!/bin/bash
+#!/bin/bash -l
+# Job configuration
+
+#SBATCH --nodes 1
+#SBATCH --ntasks 30
+#SBATCH --time=00:00:03
+#SBATCH --partition=plgrid
+#SBATCH --account=plgmpr23-cpu
 
 bucket_size_file="bucket_size.csv"
 results="results.csv"
@@ -15,6 +22,6 @@ for ((i = 1; i <= 1; i += 1)); do
   ./sort.out 1 50000000 $i >> bucket_size.csv
 done
 
-#for ((i = 1; i <= 50; i += 1)); do
+#for ((i = 1; i <= 30; i += 1)); do
 #  ./sort.out $i 50000000 $i >>"$results"
 #done
