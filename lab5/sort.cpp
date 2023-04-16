@@ -75,15 +75,17 @@ Configuration load_config_from_args(int argc, char *argv[]) {
     return config;
 }
 
-double *generate_random_numbers(int array_size) {
+double *generate_random_numbers(double *numbers, int array_size) {
+    generate_numbers_time.start = omp_get_wtime();
     unsigned short seed[3];
     seed[0] = 0;
     seed[1] = 0;
     seed[2] = 0;
-    auto *numbers = static_cast<double *>(calloc(array_size, sizeof(double)));
+#pragma omp for schedule(runtime)
     for (int i = 0; i < array_size; i++) {
         numbers[i] = erand48(seed);
     }
+    generate_numbers_time.end = omp_get_wtime();
     return numbers;
 }
 
@@ -141,14 +143,16 @@ void reassign_to_array(vector<vector<Bucket>> &buckets_by_thread, int thread_id,
 }
 
 
-double *sort(double *numbers, Configuration config) {
+double *sort(Configuration config) {
     vector<vector<Bucket>> buckets_by_thread;
     for (int i = 0; i < config.num_threads; i++) {
         buckets_by_thread.push_back(vector<Bucket>(config.bucket_amount));
     }
     omp_set_num_threads(config.num_threads);
+    auto *numbers = static_cast<double *>(calloc(config.array_size, sizeof(double)));
 #pragma omp parallel
     {
+        numbers = generate_random_numbers(numbers, config.array_size);
         int thread_id = omp_get_thread_num();
         vector<Bucket> buckets = buckets_by_thread[thread_id];
         assign_to_buckets(thread_id, numbers, config, buckets);
@@ -164,8 +168,6 @@ double *sort(double *numbers, Configuration config) {
 int main(int argc, char *argv[]) {
     Configuration config = load_config_from_args(argc, argv);
     total_time.start = omp_get_wtime();
-    double *numbers = generate_random_numbers(config.array_size);
-    print_array(numbers, config.array_size);
     double *sorted = sort(numbers, config);
     total_time.end = omp_get_wtime();
     printf("\nSorted array:\n");
