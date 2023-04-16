@@ -73,6 +73,8 @@ double *generate_random_numbers(int array_size) {
 
 void sort_buckets(vector<Bucket> &buckets) {
     for (int i = 0; i < buckets.size(); i++) {
+        printf("Sorting buckets\n");
+        buckets[i].print();
         buckets[i].sort_values();
     }
 }
