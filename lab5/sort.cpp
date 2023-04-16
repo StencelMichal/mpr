@@ -98,7 +98,7 @@ void assign_to_buckets(int thread_id, const double *numbers, Configuration confi
     }
 }
 
-int count_preceding_elements(vector<vector<Bucket>> buckets_by_thread, int thread_id) {
+int count_preceding_elements(vector<vector<Bucket>> &buckets_by_thread, int thread_id) {
     int count = 0;
     for (int i = 0; i < thread_id; i++) {
         for (auto &bucket: buckets_by_thread[i]) {
