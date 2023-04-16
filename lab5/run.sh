@@ -3,7 +3,7 @@
 
 #SBATCH --nodes 1
 #SBATCH --ntasks 30
-#SBATCH --time=00:03:00
+#SBATCH --time=03:00:00
 #SBATCH --partition=plgrid
 #SBATCH --account=plgmpr23-cpu
 
@@ -18,7 +18,10 @@ if [ -e "$results" ]; then
   rm "$results"
 fi
 
-for ((i = 1; i <= 1; i += 1)); do
+for ((i = 0; i <= 50000000; i += 50000)); do
+  if [ "$i" -eq 0 ]; then
+    i=1
+  fi
   ./sort.out 1 50000000 $i
 done
 
