@@ -19,7 +19,7 @@ if [ -e "$results" ]; then
 fi
 
 for ((i = 1; i <= 1; i += 1)); do
-  ./sort.out 1 50000000 $i >> bucket_size.csv
+  ./sort.out 1 50000000 $i
 done
 
 #for ((i = 1; i <= 30; i += 1)); do
