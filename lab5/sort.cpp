@@ -138,6 +138,7 @@ double *sort(double *numbers, Configuration config) {
         assign_to_buckets(thread_id, numbers, config, buckets);
         sort_buckets(buckets);
         printf("after sorting buckets\n");
+        buckets[0].print();
         buckets_by_thread[thread_id][0].print();
         reassign_to_array(buckets_by_thread, thread_id, numbers);
     }
