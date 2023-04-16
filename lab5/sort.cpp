@@ -36,6 +36,7 @@ public:
 struct Configuration {
     int num_threads;
     int array_size;
+    int bucket_amount;
 };
 
 void print_array(double *array, int size) {
@@ -46,12 +47,13 @@ void print_array(double *array, int size) {
 
 Configuration load_config_from_args(int argc, char *argv[]) {
     Configuration config{};
-    if (argc < 3) {
-        printf("Error: provide number of threads and array size\n");
+    if (argc < 4) {
+        printf("Error: provide number of threads, array size and number of buckets\n");
         exit(1);
     }
     config.num_threads = atoi(argv[1]);
     config.array_size = atoi(argv[2]);
+    config.bucket_amount = atoi(argv[3]);
     return config;
 }
 
@@ -73,12 +75,12 @@ void sort_buckets(vector<Bucket> &buckets) {
     }
 }
 
-void assign_to_buckets(int thread_id, const double *numbers, int array_size, vector<Bucket> buckets) {
+void assign_to_buckets(int thread_id, const double *numbers, Configuration config, vector<Bucket> buckets) {
     //dodać osobne czytanie
-    double from_value_range = thread_id * (1.0 / buckets.size());
-    double to_value_range = (thread_id + 1) * (1.0 / buckets.size());
+    double from_value_range = thread_id * (1.0 / config.num_threads);
+    double to_value_range = (thread_id + 1) * (1.0 / config.num_threads);
 #pragma omp for schedule(runtime)
-    for (int i = 0; i < array_size; i++) {
+    for (int i = 0; i < config.array_size; i++) {
         double number = numbers[i];
         if (number >= from_value_range && number < to_value_range) {
             double bucket_size = 1.0 / buckets.size();
@@ -118,14 +120,14 @@ void reassign_to_array(vector<vector<Bucket>> buckets_by_thread, int thread_id, 
 double *sort(double *numbers, Configuration config) {
     vector<vector<Bucket>> buckets_by_thread;
     for (int i = 0; i < config.num_threads; i++) {
-        buckets_by_thread.push_back(vector<Bucket>(config.num_threads));
+        buckets_by_thread.push_back(vector<Bucket>(config.bucket_amount));
     }
     omp_set_num_threads(config.num_threads);
 #pragma omp parallel
     {
         int thread_id = omp_get_thread_num();
         vector<Bucket> buckets = buckets_by_thread[thread_id];
-        assign_to_buckets(thread_id, numbers, config.array_size, buckets);
+        assign_to_buckets(thread_id, numbers, config, buckets);
         sort_buckets(buckets);
         reassign_to_array(buckets_by_thread, thread_id, numbers);
     }
