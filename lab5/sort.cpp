@@ -79,6 +79,7 @@ void assign_to_buckets(int thread_id, const double *numbers, Configuration confi
     //dodać osobne czytanie
     double from_value_range = thread_id * (1.0 / config.num_threads);
     double to_value_range = (thread_id + 1) * (1.0 / config.num_threads);
+    printf("THreadId: %d, From: %f, to: %f", thread_id, from_value_range, to_value_range);
 #pragma omp for schedule(runtime)
     for (int i = 0; i < config.array_size; i++) {
         double number = numbers[i];
