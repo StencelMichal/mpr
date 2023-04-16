@@ -90,6 +90,7 @@ void assign_to_buckets(int thread_id, const double *numbers, Configuration confi
 #pragma omp for schedule(runtime)
     for (int i = 0; i < config.array_size; i++) {
         double number = numbers[i];
+        printf("Checking number: %f %f %f\n", from_value_range, number, to_value_range);
         if (from_value_range <= number && number < to_value_range) {
             int bucket_index = number / bucket_size;
             printf("Bucket index: %d\n", bucket_index);
