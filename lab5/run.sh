@@ -12,9 +12,9 @@ if [ -e "$results" ]; then
 fi
 
 for ((i = 1; i <= 1; i += 1)); do
-  ./sort.out 1 50000000 $i >>"$bucket_size_file"
+  ./sort.out 1 50000000 $i >> bucket_size.csv
 done
 
-for ((i = 1; i <= 50; i += 1)); do
-  ./sort.out $i 50000000 $i >>"$results"
-done
+#for ((i = 1; i <= 50; i += 1)); do
+#  ./sort.out $i 50000000 $i >>"$results"
+#done
