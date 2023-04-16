@@ -7,6 +7,8 @@
 
 using namespace std;
 
+
+
 class Bucket {
 public:
     list<double> numbers;
@@ -35,6 +37,12 @@ struct Configuration {
     int num_threads;
     int array_size;
 };
+
+void print_array(double *array, int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%f\n", array[i]);
+    }
+}
 
 Configuration load_config_from_args(int argc, char *argv[]) {
     Configuration config{};
@@ -92,6 +100,7 @@ int count_preceding_elements(vector<vector<Bucket>> buckets_by_thread, int threa
 
 void reassign_to_array(vector<vector<Bucket>> buckets_by_thread, int thread_id, double *numbers) {
     int i = count_preceding_elements(buckets_by_thread, thread_id);
+    printf("preceding elements: %d", i);
     vector<Bucket> buckets = buckets_by_thread[thread_id];
     for (auto &bucket: buckets) {
         for (auto &number: bucket.numbers) {
@@ -99,6 +108,8 @@ void reassign_to_array(vector<vector<Bucket>> buckets_by_thread, int thread_id, 
             i++;
         }
     }
+    printf("\nArray after reassigning: \n)");
+    print_array(numbers, 10);
 }
 
 
@@ -119,11 +130,7 @@ double *sort(double *numbers, Configuration config) {
     return numbers;
 }
 
-void print_array(double *array, int size) {
-    for (int i = 0; i < size; i++) {
-        printf("%f\n", array[i]);
-    }
-}
+
 
 int main(int argc, char *argv[]) {
     Configuration config = load_config_from_args(argc, argv);
