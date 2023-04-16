@@ -114,7 +114,7 @@ void reassign_to_array(vector<vector<Bucket>> &buckets_by_thread, int thread_id,
     vector<Bucket> buckets = buckets_by_thread[thread_id];
     for (auto &bucket: buckets) {
         // printf("\nBucket\n");
-        bucket.print();
+//        bucket.print();
         for (auto &number: bucket.numbers) {
             numbers[i] = number;
             i++;
