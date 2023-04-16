@@ -51,7 +51,7 @@ public:
     }
 
     void print_with_config(Configuration config) const {
-        printf("%f;%d;%d;%d;\n", time_delta(), config.num_threads, config.array_size, config.bucket_amount);
+        printf("%f;%d;%d;%d\n", time_delta(), config.num_threads, config.array_size, config.bucket_amount);
     }
 };
 
