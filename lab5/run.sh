@@ -1,23 +1,20 @@
 #!/bin/bash
 
-# Usuwanie 3 plików, jeśli istnieją
-if [ -e plik1.txt ]
-then
-  rm plik1.txt
+bucket_size_file="bucket_size.csv"
+results="results.csv"
+
+if [ -e "$bucket_size_file" ]; then
+  rm "$bucket_size_file"
 fi
 
-if [ -e plik2.txt ]
-then
-  rm plik2.txt
+if [ -e "$results" ]; then
+  rm "$results"
 fi
 
-if [ -e plik3.txt ]
-then
-  rm plik3.txt
-fi
+for ((i = 1; i <= 50000000; i += 500000)); do
+  ./sort.out 1 50000000 $i >>"$bucket_size_file"
+done
 
-# Pętla od 1 do 50000000 co 500000 uruchamiająca skrypt
-for ((i=1; i<=50000000; i+=500000))
-do
-  ./nazwa_skryptu.sh 1 50000000 $i >> plik1.txt
+for ((i = 1; i <= 50; i += 1)); do
+  ./sort.out $i 50000000 $i >>"$results"
 done
