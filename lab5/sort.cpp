@@ -41,6 +41,22 @@ struct Configuration {
     int bucket_amount;
 };
 
+class TimeMeasurement {
+public:
+    double start;
+    double end;
+
+    double time_delta() const {
+        return end - start;
+    }
+};
+
+TimeMeasurement generate_numbers_time;
+TimeMeasurement assign_to_buckets_time;
+TimeMeasurement sort_buckets_time;
+TimeMeasurement reassign_to_array_time;
+TimeMeasurement total_time;
+
 void print_array(double *array, int size) {
     for (int i = 0; i < size; i++) {
         printf("%f\n", array[i]);
@@ -147,9 +163,12 @@ double *sort(double *numbers, Configuration config) {
 
 int main(int argc, char *argv[]) {
     Configuration config = load_config_from_args(argc, argv);
+    total_time.start = omp_get_wtime();
     double *numbers = generate_random_numbers(config.array_size);
     print_array(numbers, config.array_size);
     double *sorted = sort(numbers, config);
+    total_time.end = omp_get_wtime();
     printf("\nSorted array:\n");
     print_array(sorted, config.array_size);
+    cout << "Total time: " << total_time.time_delta() << endl;
 }
