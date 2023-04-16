@@ -179,8 +179,8 @@ int main(int argc, char *argv[]) {
     total_time.start = omp_get_wtime();
     double *sorted = sort(config);
     total_time.end = omp_get_wtime();
-    printf("\nSorted array:\n");
-    print_array(sorted, config.array_size);
+//    printf("\nSorted array:\n");
+//    print_array(sorted, config.array_size);
     cout << "Total time: " << total_time.time_delta() << endl;
     cout << "Total time: " << total_time.time_delta() << endl;
 
