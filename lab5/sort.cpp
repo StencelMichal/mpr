@@ -3,7 +3,7 @@
 #include <utility>
 #include <vector>
 //#include "/usr/local/opt/libomp/include/omp.h"
-//#include "omp.h"
+#include "omp.h"
 
 using namespace std;
 
