@@ -76,11 +76,11 @@ Configuration load_config_from_args(int argc, char *argv[]) {
 }
 
 double *generate_random_numbers(double *numbers, int array_size, unsigned short seed[3]) {
+    generate_numbers_time.start = omp_get_wtime();
     int thread_id = omp_get_thread_num();
     seed[0] = thread_id;
     seed[1] = thread_id + 1;
     seed[2] = thread_id + 2;
-    generate_numbers_time.start = omp_get_wtime();
 #pragma omp for schedule(static)
     for (int i = 0; i < array_size; i++) {
         numbers[i] = erand48(seed);
@@ -169,6 +169,7 @@ double *sort(Configuration config) {
     buckets_by_thread.push_back(vector<Bucket>(buckets_per_thread + config.bucket_amount % config.num_threads));
     omp_set_num_threads(config.num_threads);
     auto *numbers = static_cast<double *>(calloc(config.array_size, sizeof(double)));
+    total_time.start = omp_get_wtime();
 #pragma omp parallel private(seed) shared(buckets_by_thread, numbers)
     {
         numbers = generate_random_numbers(numbers, config.array_size, seed);
@@ -180,6 +181,7 @@ double *sort(Configuration config) {
 #pragma omp barrier
         reassign_to_array(buckets_by_thread, thread_id, numbers);
     }
+    total_time.end = omp_get_wtime();
     return numbers;
 }
 
@@ -192,9 +194,7 @@ void print_time_measurements(Configuration config) {
 
 int main(int argc, char *argv[]) {
     Configuration config = load_config_from_args(argc, argv);
-    total_time.start = omp_get_wtime();
     double *sorted = sort(config);
-    total_time.end = omp_get_wtime();
     printf("\nSorted array:\n");
     print_array(sorted, config.array_size);
     print_time_measurements(config);
