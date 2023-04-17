@@ -22,7 +22,7 @@ for ((i = 0; i <= 1000000; i += 1000)); do
   if [ "$i" -eq 0 ]; then
     i=1
   fi
-  ./sort.out 1 50000000 $i
+  ./sort.out 1 1000000 $i
 done
 
 #for ((i = 1; i <= 30; i += 1)); do
