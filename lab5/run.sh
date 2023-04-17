@@ -18,13 +18,13 @@ if [ -e "$results" ]; then
   rm "$results"
 fi
 
-for ((i = 0; i <= 1000000; i += 1000)); do
-  if [ "$i" -eq 0 ]; then
-    i=1
-  fi
-  ./sort.out 1 1000000 $i
-done
-
-#for ((i = 1; i <= 30; i += 1)); do
-#  ./sort.out $i 50000000 $i >>"$results"
+#for ((i = 0; i <= 1000000; i += 1000)); do
+#  if [ "$i" -eq 0 ]; then
+#    i=1
+#  fi
+#  ./sort.out 1 1000000 $i
 #done
+#
+for ((i = 1; i <= 30; i += 1)); do
+  ./sort.out $i 1000000 10000
+done
