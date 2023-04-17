@@ -76,6 +76,10 @@ Configuration load_config_from_args(int argc, char *argv[]) {
 }
 
 double *generate_random_numbers(double *numbers, int array_size, unsigned short seed[3]) {
+    int thread_id = omp_get_thread_num();
+    seed[0] = thread_id;
+    seed[1] = thread_id + 1;
+    seed[2] = thread_id + 2;
     generate_numbers_time.start = omp_get_wtime();
 #pragma omp for schedule(static)
     for (int i = 0; i < array_size; i++) {
@@ -155,9 +159,6 @@ void reassign_to_array(vector<vector<Bucket>> &buckets_by_thread, int thread_id,
 
 double *sort(Configuration config) {
     unsigned short seed[3];
-    seed[0] = 0;
-    seed[1] = 0;
-    seed[2] = 0;
     vector<vector<Bucket>> buckets_by_thread;
     int buckets_per_thread = config.bucket_amount / config.num_threads;
     for (int i = 0; i < config.num_threads - 1; i++) {
