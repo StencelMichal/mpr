@@ -98,6 +98,6 @@ def draw_chart_3():
 
 # save_csv_as_df()
 # draw_chart_1()
-# draw_chart_2()
-draw_chart_3()
+draw_chart_2()
+# draw_chart_3()
 plt.show()

@@ -100,11 +100,9 @@ void sort_buckets(vector<Bucket> &buckets) {
         // buckets[i].print();
         buckets[i].sort_values();
     }
-    sort_buckets_time.end = omp_get_wtime();
 }
 
 void assign_to_buckets(int thread_id, const double *numbers, Configuration config, vector<Bucket> &buckets) {
-    assign_to_buckets_time.start = omp_get_wtime();
     //dodać osobne czytanie
     // printf("bucket size: %zu\n", buckets.size());
     double bucket_size = 1.0 / double(buckets.size());
@@ -173,12 +171,14 @@ double *sort(Configuration config) {
 #pragma omp parallel private(seed) shared(buckets_by_thread, numbers)
     {
         numbers = generate_random_numbers(numbers, config.array_size, seed);
+        assign_to_buckets_time.start = omp_get_wtime();
         int thread_id = omp_get_thread_num();
         vector<Bucket> buckets = buckets_by_thread[thread_id];
         assign_to_buckets(thread_id, numbers, config, buckets);
         sort_buckets(buckets);
         buckets_by_thread[thread_id] = buckets;
 #pragma omp barrier
+        sort_buckets_time.end = omp_get_wtime();
         reassign_to_array(buckets_by_thread, thread_id, numbers);
     }
     total_time.end = omp_get_wtime();
