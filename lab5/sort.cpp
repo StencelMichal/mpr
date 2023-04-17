@@ -173,7 +173,7 @@ double *sort(Configuration config) {
         vector<Bucket> buckets = buckets_by_thread[thread_id];
         assign_to_buckets(thread_id, numbers, config, buckets);
         sort_buckets(buckets);
-//        buckets_by_thread[thread_id] = buckets;
+        buckets_by_thread[thread_id] = buckets;
 #pragma omp barrier
         reassign_to_array(buckets_by_thread, thread_id, numbers);
     }
