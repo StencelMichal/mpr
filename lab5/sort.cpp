@@ -166,14 +166,14 @@ double *sort(Configuration config) {
     buckets_by_thread.push_back(vector<Bucket>(buckets_per_thread + config.bucket_amount % config.num_threads));
     omp_set_num_threads(config.num_threads);
     auto *numbers = static_cast<double *>(calloc(config.array_size, sizeof(double)));
-#pragma omp parallel private(seed)
+#pragma omp parallel private(seed) shared(buckets_by_thread, numbers)
     {
         numbers = generate_random_numbers(numbers, config.array_size, seed);
         int thread_id = omp_get_thread_num();
         vector<Bucket> buckets = buckets_by_thread[thread_id];
         assign_to_buckets(thread_id, numbers, config, buckets);
         sort_buckets(buckets);
-        buckets_by_thread[thread_id] = buckets;
+//        buckets_by_thread[thread_id] = buckets;
 #pragma omp barrier
         reassign_to_array(buckets_by_thread, thread_id, numbers);
     }
