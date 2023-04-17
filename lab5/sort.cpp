@@ -75,7 +75,7 @@ Configuration load_config_from_args(int argc, char *argv[]) {
     return config;
 }
 
-double *generate_random_numbers(double *numbers, int array_size, short seed[3]) {
+double *generate_random_numbers(double *numbers, int array_size, unsigned short seed[3]) {
     generate_numbers_time.start = omp_get_wtime();
 #pragma omp for schedule(runtime)
     for (int i = 0; i < array_size; i++) {
