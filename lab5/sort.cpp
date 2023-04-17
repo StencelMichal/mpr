@@ -86,10 +86,10 @@ double *generate_random_numbers(double *numbers, int array_size, unsigned short 
         numbers[i] = erand48(seed);
     }
     generate_numbers_time.end = omp_get_wtime();
-    if (omp_get_thread_num() == 0) {
-        printf("Generated numbers\n)");
-        print_array(numbers, array_size);
-    }
+//    if (omp_get_thread_num() == 0) {
+//        printf("Generated numbers\n)");
+//        print_array(numbers, array_size);
+//    }
     return numbers;
 }
 
@@ -196,6 +196,6 @@ int main(int argc, char *argv[]) {
     Configuration config = load_config_from_args(argc, argv);
     double *sorted = sort(config);
     printf("\nSorted array:\n");
-    print_array(sorted, config.array_size);
+//    print_array(sorted, config.array_size);
     print_time_measurements(config);
 }
