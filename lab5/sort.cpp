@@ -195,7 +195,7 @@ void print_time_measurements(Configuration config) {
 int main(int argc, char *argv[]) {
     Configuration config = load_config_from_args(argc, argv);
     double *sorted = sort(config);
-    printf("\nSorted array:\n");
+//    printf("\nSorted array:\n");
 //    print_array(sorted, config.array_size);
     print_time_measurements(config);
 }
