@@ -106,6 +106,7 @@ void assign_to_buckets(int thread_id, const double *numbers, Configuration confi
     double bucket_size = 1.0 / double(buckets.size());
     double from_value_range = thread_id * (1.0 / double(config.num_threads));
     double to_value_range = (thread_id + 1) * (1.0 / double(config.num_threads));
+    int buckets_amount = buckets.size();
     // printf("THreadId: %d, Bucket size: %f, From: %f, to: %f\n", thread_id, bucket_size, from_value_range,
 //    to_value_range);
     for (int i = 0; i < config.array_size; i++) {
@@ -115,7 +116,7 @@ void assign_to_buckets(int thread_id, const double *numbers, Configuration confi
             buckets[0].add(number);
         }
         if (from_value_range < number && number <= to_value_range) {
-            int bucket_index = number / bucket_size;
+            int bucket_index = number / buckets_amount;
             // printf("Bucket index: %d\n", bucket_index);
             buckets[bucket_index].add(number);
         }
@@ -154,9 +155,11 @@ void reassign_to_array(vector<vector<Bucket>> &buckets_by_thread, int thread_id,
 
 double *sort(Configuration config) {
     vector<vector<Bucket>> buckets_by_thread;
-    for (int i = 0; i < config.num_threads; i++) {
-        buckets_by_thread.push_back(vector<Bucket>(config.bucket_amount));
+    int buckets_per_thread = config.bucket_amount / config.num_threads;
+    for (int i = 0; i < config.num_threads - 1; i++) {
+        buckets_by_thread.push_back(vector<Bucket>(buckets_per_thread));
     }
+    buckets_by_thread.push_back(vector<Bucket>(buckets_per_thread + config.bucket_amount % config.num_threads));
     omp_set_num_threads(config.num_threads);
     auto *numbers = static_cast<double *>(calloc(config.array_size, sizeof(double)));
 #pragma omp parallel
