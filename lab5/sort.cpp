@@ -80,9 +80,12 @@ double *generate_random_numbers(double *numbers, int array_size, unsigned short 
 #pragma omp for schedule(static)
     for (int i = 0; i < array_size; i++) {
         numbers[i] = erand48(seed);
-        printf("%f\n", numbers[i]);
     }
     generate_numbers_time.end = omp_get_wtime();
+    if (omp_get_thread_num() == 0) {
+        printf("Generated numbers\n)");
+        print_array(numbers);
+    }
     return numbers;
 }
 
