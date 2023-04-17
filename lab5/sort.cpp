@@ -86,6 +86,7 @@ double *generate_random_numbers(double *numbers, int array_size) {
         numbers[i] = erand48(seed);
     }
     generate_numbers_time.end = omp_get_wtime();
+    print_array(numbers, array_size);
     return numbers;
 }
 
