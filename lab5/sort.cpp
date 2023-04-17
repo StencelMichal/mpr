@@ -81,7 +81,7 @@ double *generate_random_numbers(double *numbers, int array_size) {
     seed[0] = 0;
     seed[1] = 0;
     seed[2] = 0;
-#pragma omp for schedule(runtime)
+#pragma omp for schedule(runtime) private(seed)
     for (int i = 0; i < array_size; i++) {
         numbers[i] = erand48(seed);
     }
