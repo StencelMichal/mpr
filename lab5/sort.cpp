@@ -113,7 +113,9 @@ void assign_to_buckets(int thread_id, const double *numbers, Configuration confi
     int buckets_amount = buckets.size();
     // printf("THreadId: %d, Bucket size: %f, From: %f, to: %f\n", thread_id, bucket_size, from_value_range,
 //    to_value_range);
+
     for (int i = 0; i < config.array_size; i++) {
+        i = (i + thread_id * (config.array_size / config.num_threads)) % config.array_size;
         double number = numbers[i];
         // printf("Checking number: %f %f %f\n", from_value_range, number, to_value_range);
         if (number == 0.0 && thread_id == 0) {
