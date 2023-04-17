@@ -84,7 +84,7 @@ double *generate_random_numbers(double *numbers, int array_size, unsigned short 
     generate_numbers_time.end = omp_get_wtime();
     if (omp_get_thread_num() == 0) {
         printf("Generated numbers\n)");
-        print_array(numbers);
+        print_array(numbers, array_size);
     }
     return numbers;
 }
